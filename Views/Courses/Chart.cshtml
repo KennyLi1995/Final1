@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FinalAssignment2.Models.Course>
+
+
+@{
+    ViewBag.Title = "Chart";
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #datatable {
+            display: none;
+        }
+    </style>
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/data.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <table id="datatable">
+
+        <tbody>
+            <tr>
+                <th>Course</th>
+                <td>Rate</td>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@Html.DisplayFor(modelItem => item.Name)</th>
+                    <td>@Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script src="~/Scripts/JavaScript.js"></script>
+
+</body>
+</html>

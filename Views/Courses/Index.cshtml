@@ -1,0 +1,213 @@
+﻿@model IEnumerable<FinalAssignment2.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Course Id
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                School
+            </th>
+            <th>
+                Tutor
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+            <th>
+                Number of rating
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.Id)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.School.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tutor.FirstName)
+                @Html.DisplayFor(modelItem => item.Tutor.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score_num)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                @Html.ActionLink("Rate", "Rate", new { id = item.Id })
+            </td>
+        </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<div id="calendar"></div>
+<div style="display: none">
+    <table class="table1">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.School.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tutor.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Score)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Score_num)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr class="events">
+                    <td class="courseId">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td class="schoolName">
+                        @Html.DisplayFor(modelItem => item.School.Name)
+                    </td>
+                    <td class="tutorName">
+                        @Html.DisplayFor(modelItem => item.Tutor.FirstName)
+                    </td>
+                    <td class="title">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td class="Description">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td class="Score">
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                    <td class="Score_num">
+                        @Html.DisplayFor(modelItem => item.Score_num)
+                    </td>
+                    <td class="start">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                        @Html.ActionLink("Rate", "Rate", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</div>
+
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://jscdn.com.cn/highcharts/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #datatable {
+            display: none;
+        }
+    </style>
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/data.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <table id="datatable">
+
+        <tbody>
+            <tr>
+                <th>Course</th>
+                <td>Rate</td>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@Html.DisplayFor(modelItem => item.Name)</th>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Score)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <script src="~/Scripts/JavaScript.js"></script>
+
+</body>
+</html>
+
+
+@section Scripts {
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.bootstrap.js"></script>
+    <script>$(document).ready(function () { $('.table').DataTable(); });</script>
+
+    @Scripts.Render("~/bundles/fullcalendarCourse")
+    <link href="~/Content/fullcalendar.css" rel="stylesheet" />
+}
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css" rel="stylesheet" />
